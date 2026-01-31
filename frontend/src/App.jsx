@@ -1,26 +1,25 @@
 import { useState } from 'react'
-import './App.css'
-import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@clerk/clerk-react";
+import { 
+  SignedIn, 
+  SignedOut, 
+  SignInButton, 
+  SignOutButton, 
+  UserButton,
+  useUser
+ } from "@clerk/clerk-react";
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const { isSignedIn } = useUser();
 
   return (
     <>
-      <h1>Welcome to the app</h1>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/problems" element={isSignedIn ? <ProblemsPage /> : <Navigate to={"/"} />} />
+      </Routes>
 
-      <SignedOut>
-        <SignInButton mode="modal">
-          <button>Login</button>
-        </SignInButton>
-      </SignedOut>
-
-      <SignedIn>
-        <SignOutButton />
-      </SignedIn>
-
-      <UserButton />
+      <Toaster toastOptions={{ duration: 3000 }} />
     </>
   );
 }
