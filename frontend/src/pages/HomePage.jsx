@@ -27,7 +27,7 @@ function HomePage() {
 
             <div className="flex flex-col">
               <span className="font-black text-xl bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent font-mono tracking-wider">
-                InterviewDesk
+                SocialCode
               </span>
               <span className="text-xs text-base-content/60 font-medium -mt-1">Code Together</span>
             </div>
@@ -62,7 +62,7 @@ function HomePage() {
             </h1>
 
             <p className="text-xl text-base-content/70 leading-relaxed max-w-xl">
-              The ultimate platform for collaborative coding interviews and pair programming.
+              The ultimate platform for collaborative coding and pair programming.
               Connect face-to-face, code in real-time, and ace your technical interviews.
             </p>
 
@@ -130,7 +130,7 @@ function HomePage() {
             Everything You Need to <span className="text-primary font-mono">Succeed</span>
           </h2>
           <p className="text-lg text-base-content/70 max-w-2xl mx-auto">
-            Powerful features designed to make your coding interviews seamless and productive
+            Powerful features designed to make your coding sessions seamless and productive
           </p>
         </div>
 
@@ -144,7 +144,7 @@ function HomePage() {
               </div>
               <h3 className="card-title">HD Video Call</h3>
               <p className="text-base-content/70">
-                Crystal clear video and audio for seamless communication during interviews
+                Crystal clear video and audio for seamless communication
               </p>
             </div>
           </div>
