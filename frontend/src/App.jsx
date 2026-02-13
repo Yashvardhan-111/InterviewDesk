@@ -7,7 +7,6 @@ import HomePage from "./pages/HomePage";
 import ProblemsPage from "./pages/ProblemsPage";
 import DashboardPage from "./pages/DashboardPage";
 import ProblemPage from "./pages/ProblemPage";
-import ProblemsPage from "./pages/ProblemsPage";
 import SessionPage from "./pages/SessionPage";
 
 function App() {
