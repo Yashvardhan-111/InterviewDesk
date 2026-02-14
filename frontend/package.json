@@ -22,7 +22,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hot-toast": "^2.6.0",
-    "react-resizable-panels": "^4.6.1",
+    "react-resizable-panels": "^3.0.6",
     "react-router": "^7.9.4",
     "stream-chat": "^9.23.0",
     "stream-chat-react": "^13.9.0",
