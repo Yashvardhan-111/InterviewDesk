@@ -88,6 +88,26 @@ int main() {
 
     return 0;
 }`,
+        cpp: `#include <bits/stdc++.h>
+    using namespace std;
+
+    vector<int> twoSum(vector<int>& nums, int target) {
+      // Write your solution here
+      return {};
+    }
+
+    static void printVec(const vector<int>& v){
+      cout << "[";
+      for(size_t i=0;i<v.size();++i){ if(i) cout << ","; cout << v[i]; }
+      cout << "]\n";
+    }
+
+    int main(){
+      printVec(twoSum(vector<int>{2,7,11,15}, 9));
+      printVec(twoSum(vector<int>{3,2,4}, 6));
+      printVec(twoSum(vector<int>{3,3}, 6));
+      return 0;
+    }`,
     },
     expectedOutput: {
       javascript: "[0,1]\n[1,2]\n[0,1]",
@@ -180,6 +200,29 @@ int main() {
     cout << "\n";
     return 0;
 }`,
+        cpp: `#include <bits/stdc++.h>
+    using namespace std;
+
+    void reverseString(vector<char>& s) {
+      // Write your solution here
+    }
+
+    static void printChars(const vector<char>& v){
+      cout << "[";
+      for(size_t i=0;i<v.size();++i){ if(i) cout << ","; cout << '"' << v[i] << '"'; }
+      cout << "]\n";
+    }
+
+    int main(){
+      vector<char> test1 = {'h','e','l','l','o'};
+      reverseString(test1);
+      printChars(test1);
+
+      vector<char> test2 = {'H','a','n','n','a','h'};
+      reverseString(test2);
+      printChars(test2);
+      return 0;
+    }`,
     },
     expectedOutput: {
       javascript: '["o","l","l","e","h"]\n["h","a","n","n","a","H"]',
@@ -346,6 +389,20 @@ int main() {
     cout << maxSubArray(a3) << "\n"; // Expected: 23
     return 0;
 }`,
+        cpp: `#include <bits/stdc++.h>
+    using namespace std;
+
+    int maxSubArray(vector<int>& nums) {
+      // Write your solution here
+      return 0;
+    }
+
+    int main(){
+      cout << maxSubArray(vector<int>{-2,1,-3,4,-1,2,1,-5,4}) << "\n";
+      cout << maxSubArray(vector<int>{1}) << "\n";
+      cout << maxSubArray(vector<int>{5,4,-1,7,8}) << "\n";
+      return 0;
+    }`,
     },
     expectedOutput: {
       javascript: "6\n1\n23",
@@ -424,6 +481,19 @@ int main() {
     cout << maxArea(h2) << "\n"; // Expected: 1
     return 0;
 }`,
+        cpp: `#include <bits/stdc++.h>
+    using namespace std;
+
+    int maxArea(vector<int>& height) {
+      // Write your solution here
+      return 0;
+    }
+
+    int main(){
+      cout << maxArea(vector<int>{1,8,6,2,5,4,8,3,7}) << "\n";
+      cout << maxArea(vector<int>{1,1}) << "\n";
+      return 0;
+    }`,
     },
     expectedOutput: {
       javascript: "49\n1",
