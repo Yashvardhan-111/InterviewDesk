@@ -1,6 +1,22 @@
 import { chatClient, streamClient } from "../lib/stream.js";
 import Session from "../models/Session.js";
 
+/**
+ * Derive a 4-character room code from a MongoDB sessionId
+ * Takes the last 4 characters of the ID and reverses them
+ * @param {string} sessionId - The MongoDB session ID
+ * @returns {string} - A 4-character room code
+ */
+function deriveRoomCode(sessionId) {
+  if (!sessionId || sessionId.length < 4) {
+    return "0000";
+  }
+  
+  // Get last 4 characters and reverse them
+  const lastFour = sessionId.slice(-4);
+  return lastFour.split("").reverse().join("").toUpperCase();
+}
+
 export async function createSession(req, res) {
   try {
     const { problem, difficulty } = req.body;
@@ -95,10 +111,13 @@ export async function getSessionById(req, res) {
 export async function joinSession(req, res) {
   try {
     const { id } = req.params;
+    const { roomCode } = req.body;
     const userId = req.user._id;
     const clerkId = req.user.clerkId;
 
     const session = await Session.findById(id);
+
+    if (!session) return res.status(404).json({ message: "Session not found" });
 
     if (session.status === "completed") {
       return res.status(400).json({ message: "Cannot join a completed session" });
@@ -108,7 +127,13 @@ export async function joinSession(req, res) {
       return res.status(400).json({ message: "Host cannot join their own session as participant" });
     }
 
-    if (!session) return res.status(404).json({ message: "Session not found" });
+    // Validate room code if provided
+    if (roomCode) {
+      const expectedCode = deriveRoomCode(session._id.toString());
+      if ((roomCode || "").toUpperCase().trim() !== expectedCode) {
+        return res.status(401).json({ message: "Invalid room code" });
+      }
+    }
 
     // check if session is already full - has a participant
     if (session.participant) return res.status(409).json({ message: "Session is full" });
