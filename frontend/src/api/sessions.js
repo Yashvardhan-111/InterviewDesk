@@ -20,8 +20,15 @@ export const sessionApi = {
     return response.data;
   },
 
-  joinSession: async (id) => {
-    const response = await axiosInstance.post(`/sessions/${id}/join`);
+  joinSession: async (payload) => {
+    // Support both old format (id string) and new format (object with sessionId and roomCode)
+    if (typeof payload === "string") {
+      const response = await axiosInstance.post(`/sessions/${payload}/join`);
+      return response.data;
+    }
+    // New format with room code
+    const { sessionId, roomCode } = payload;
+    const response = await axiosInstance.post(`/sessions/${sessionId}/join`, { roomCode });
     return response.data;
   },
   endSession: async (id) => {
