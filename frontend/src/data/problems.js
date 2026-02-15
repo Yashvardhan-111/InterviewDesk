@@ -68,52 +68,29 @@ class Solution {
       cpp: `#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> twoSum(vector<int>& nums, int target) {
-    // Write your solution here
-    return {};
+vector<int> twoSum(const vector<int>& nums, int target) {
+  // Write your solution here
+  return {};
 }
 
-int main() {
-    vector<int> a1 = {2,7,11,15};
-    auto r1 = twoSum(a1, 9);
-    if(r1.size()) cout << "[" << r1[0] << ", " << r1[1] << "]\n";
+static void printVec(const vector<int>& v){
+  cout << "[";
+  for(size_t i=0;i<v.size();++i){ if(i) cout << ","; cout << v[i]; }
+  cout << "]\n";
+}
 
-    vector<int> a2 = {3,2,4};
-    auto r2 = twoSum(a2, 6);
-    if(r2.size()) cout << "[" << r2[0] << ", " << r2[1] << "]\n";
-
-    vector<int> a3 = {3,3};
-    auto r3 = twoSum(a3, 6);
-    if(r3.size()) cout << "[" << r3[0] << ", " << r3[1] << "]\n";
-
-    return 0;
+int main(){
+  printVec(twoSum(vector<int>{2,7,11,15}, 9));
+  printVec(twoSum(vector<int>{3,2,4}, 6));
+  printVec(twoSum(vector<int>{3,3}, 6));
+  return 0;
 }`,
-        cpp: `#include <bits/stdc++.h>
-    using namespace std;
-
-    vector<int> twoSum(vector<int>& nums, int target) {
-      // Write your solution here
-      return {};
-    }
-
-    static void printVec(const vector<int>& v){
-      cout << "[";
-      for(size_t i=0;i<v.size();++i){ if(i) cout << ","; cout << v[i]; }
-      cout << "]\n";
-    }
-
-    int main(){
-      printVec(twoSum(vector<int>{2,7,11,15}, 9));
-      printVec(twoSum(vector<int>{3,2,4}, 6));
-      printVec(twoSum(vector<int>{3,3}, 6));
-      return 0;
-    }`,
     },
     expectedOutput: {
       javascript: "[0,1]\n[1,2]\n[0,1]",
       python: "[0, 1]\n[1, 2]\n[0, 1]",
       java: "[0, 1]\n[1, 2]\n[0, 1]",
-      cpp: "[0, 1]\n[1, 2]\n[0, 1]",
+      cpp: "[0,1]\n[1,2]\n[0,1]",
     },
   },
 
@@ -185,50 +162,31 @@ class Solution {
 using namespace std;
 
 void reverseString(vector<char>& s) {
-    // Write your solution here
+  // Write your solution here
 }
 
-int main() {
-    vector<char> test1 = {'h','e','l','l','o'};
-    reverseString(test1);
-    for(size_t i=0;i<test1.size();++i){ cout << test1[i]; if(i+1<test1.size()) cout << ","; }
-    cout << "\n"; // Expected: [o,l,l,e,h]
+static void printChars(const vector<char>& v){
+  cout << "[";
+  for(size_t i=0;i<v.size();++i){ if(i) cout << ","; cout << v[i]; }
+  cout << "]\n";
+}
 
-    vector<char> test2 = {'H','a','n','n','a','h'};
-    reverseString(test2);
-    for(size_t i=0;i<test2.size();++i){ cout << test2[i]; if(i+1<test2.size()) cout << ","; }
-    cout << "\n";
-    return 0;
+int main(){
+  vector<char> test1 = {'h','e','l','l','o'};
+  reverseString(test1);
+  printChars(test1);
+
+  vector<char> test2 = {'H','a','n','n','a','h'};
+  reverseString(test2);
+  printChars(test2);
+  return 0;
 }`,
-        cpp: `#include <bits/stdc++.h>
-    using namespace std;
-
-    void reverseString(vector<char>& s) {
-      // Write your solution here
-    }
-
-    static void printChars(const vector<char>& v){
-      cout << "[";
-      for(size_t i=0;i<v.size();++i){ if(i) cout << ","; cout << '"' << v[i] << '"'; }
-      cout << "]\n";
-    }
-
-    int main(){
-      vector<char> test1 = {'h','e','l','l','o'};
-      reverseString(test1);
-      printChars(test1);
-
-      vector<char> test2 = {'H','a','n','n','a','h'};
-      reverseString(test2);
-      printChars(test2);
-      return 0;
-    }`,
     },
     expectedOutput: {
       javascript: '["o","l","l","e","h"]\n["h","a","n","n","a","H"]',
       python: "['o', 'l', 'l', 'e', 'h']\n['h', 'a', 'n', 'n', 'a', 'H']",
       java: "[o, l, l, e, h]\n[h, a, n, n, a, H]",
-      cpp: "[o, l, l, e, h]\n[h, a, n, n, a, H]",
+      cpp: "[o,l,l,e,h]\n[h,a,n,n,a,H]",
     },
   },
 
@@ -376,33 +334,16 @@ print(maxSubArray([5,4,-1,7,8]))  # Expected: 23`,
 using namespace std;
 
 int maxSubArray(vector<int>& nums) {
-    // Write your solution here
-    return 0;
+  // Write your solution here
+  return 0;
 }
 
-int main() {
-    vector<int> a1 = {-2,1,-3,4,-1,2,1,-5,4};
-    cout << maxSubArray(a1) << "\n"; // Expected: 6
-    vector<int> a2 = {1};
-    cout << maxSubArray(a2) << "\n"; // Expected: 1
-    vector<int> a3 = {5,4,-1,7,8};
-    cout << maxSubArray(a3) << "\n"; // Expected: 23
-    return 0;
+int main(){
+  cout << maxSubArray(vector<int>{-2,1,-3,4,-1,2,1,-5,4}) << "\n";
+  cout << maxSubArray(vector<int>{1}) << "\n";
+  cout << maxSubArray(vector<int>{5,4,-1,7,8}) << "\n";
+  return 0;
 }`,
-        cpp: `#include <bits/stdc++.h>
-    using namespace std;
-
-    int maxSubArray(vector<int>& nums) {
-      // Write your solution here
-      return 0;
-    }
-
-    int main(){
-      cout << maxSubArray(vector<int>{-2,1,-3,4,-1,2,1,-5,4}) << "\n";
-      cout << maxSubArray(vector<int>{1}) << "\n";
-      cout << maxSubArray(vector<int>{5,4,-1,7,8}) << "\n";
-      return 0;
-    }`,
     },
     expectedOutput: {
       javascript: "6\n1\n23",
@@ -470,30 +411,15 @@ print(maxArea([1,1]))  # Expected: 1`,
 using namespace std;
 
 int maxArea(vector<int>& height) {
-    // Write your solution here
-    return 0;
+  // Write your solution here
+  return 0;
 }
 
-int main() {
-    vector<int> h1 = {1,8,6,2,5,4,8,3,7};
-    cout << maxArea(h1) << "\n"; // Expected: 49
-    vector<int> h2 = {1,1};
-    cout << maxArea(h2) << "\n"; // Expected: 1
-    return 0;
+int main(){
+  cout << maxArea(vector<int>{1,8,6,2,5,4,8,3,7}) << "\n";
+  cout << maxArea(vector<int>{1,1}) << "\n";
+  return 0;
 }`,
-        cpp: `#include <bits/stdc++.h>
-    using namespace std;
-
-    int maxArea(vector<int>& height) {
-      // Write your solution here
-      return 0;
-    }
-
-    int main(){
-      cout << maxArea(vector<int>{1,8,6,2,5,4,8,3,7}) << "\n";
-      cout << maxArea(vector<int>{1,1}) << "\n";
-      return 0;
-    }`,
     },
     expectedOutput: {
       javascript: "49\n1",
