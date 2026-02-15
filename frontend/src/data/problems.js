@@ -76,7 +76,7 @@ vector<int> twoSum(const vector<int>& nums, int target) {
 static void printVec(const vector<int>& v){
   cout << "[";
   for(size_t i=0;i<v.size();++i){ if(i) cout << ","; cout << v[i]; }
-  cout << "]\n";
+  cout << "]" << endl;
 }
 
 int main(){
@@ -168,7 +168,7 @@ void reverseString(vector<char>& s) {
 static void printChars(const vector<char>& v){
   cout << "[";
   for(size_t i=0;i<v.size();++i){ if(i) cout << ","; cout << v[i]; }
-  cout << "]\n";
+  cout << "]" << endl;
 }
 
 int main(){
@@ -258,9 +258,9 @@ bool isPalindrome(string s) {
 }
 
 int main() {
-    cout << (isPalindrome("A man, a plan, a canal: Panama") ? "true" : "false") << "\n";
-    cout << (isPalindrome("race a car") ? "true" : "false") << "\n";
-    cout << (isPalindrome(" ") ? "true" : "false") << "\n";
+    cout << (isPalindrome("A man, a plan, a canal: Panama") ? "true" : "false") << endl;
+    cout << (isPalindrome("race a car") ? "true" : "false") << endl;
+    cout << (isPalindrome(" ") ? "true" : "false") << endl;
     return 0;
 }`,
     },
@@ -339,9 +339,9 @@ int maxSubArray(vector<int>& nums) {
 }
 
 int main(){
-  cout << maxSubArray(vector<int>{-2,1,-3,4,-1,2,1,-5,4}) << "\n";
-  cout << maxSubArray(vector<int>{1}) << "\n";
-  cout << maxSubArray(vector<int>{5,4,-1,7,8}) << "\n";
+  cout << maxSubArray(vector<int>{-2,1,-3,4,-1,2,1,-5,4}) << endl;
+  cout << maxSubArray(vector<int>{1}) << endl;
+  cout << maxSubArray(vector<int>{5,4,-1,7,8}) << endl;
   return 0;
 }`,
     },
@@ -416,8 +416,8 @@ int maxArea(vector<int>& height) {
 }
 
 int main(){
-  cout << maxArea(vector<int>{1,8,6,2,5,4,8,3,7}) << "\n";
-  cout << maxArea(vector<int>{1,1}) << "\n";
+  cout << maxArea(vector<int>{1,8,6,2,5,4,8,3,7}) << endl;
+  cout << maxArea(vector<int>{1,1}) << endl;
   return 0;
 }`,
     },
