@@ -333,7 +333,7 @@ print(maxSubArray([5,4,-1,7,8]))  # Expected: 23`,
       cpp: `#include <bits/stdc++.h>
 using namespace std;
 
-int maxSubArray(vector<int>& nums) {
+int maxSubArray(const vector<int>& nums) {
   // Write your solution here
   return 0;
 }
@@ -410,7 +410,7 @@ print(maxArea([1,1]))  # Expected: 1`,
       cpp: `#include <bits/stdc++.h>
 using namespace std;
 
-int maxArea(vector<int>& height) {
+int maxArea(const vector<int>& height) {
   // Write your solution here
   return 0;
 }
