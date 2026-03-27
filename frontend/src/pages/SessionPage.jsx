@@ -10,8 +10,6 @@ import { getDifficultyBadgeClass } from "../lib/utils";
 import { Loader2Icon, LogOutIcon, PhoneOffIcon } from "lucide-react";
 import CodeEditorPanel from "../components/CodeEditorPanel";
 import OutputPanel from "../components/OutputPanel";
-import RoomCodeModal from "../components/RoomCodeModal";
-import { deriveRoomCode } from "../lib/roomCode";
 
 import useStreamClient from "../hooks/useStreamClient";
 import { StreamCall, StreamVideo } from "@stream-io/video-react-sdk";
@@ -23,7 +21,6 @@ function SessionPage() {
   const { user } = useUser();
   const [output, setOutput] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
-  const [showRoomCodeModal, setShowRoomCodeModal] = useState(false);
 
   const { data: sessionData, isLoading: loadingSession, refetch } = useSessionById(id);
 
@@ -49,14 +46,13 @@ function SessionPage() {
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
   const [code, setCode] = useState(problemData?.starterCode?.[selectedLanguage] || "");
 
-  // show room code modal if user is not already a participant and not the host
+  // auto-join session if user is not already a participant and not the host
   useEffect(() => {
     if (!session || !user || loadingSession) return;
     if (isHost || isParticipant) return;
 
-    // show the room code modal
-    setShowRoomCodeModal(true);
-  }, [session, user, loadingSession, isHost, isParticipant]);
+    joinSessionMutation.mutate(id, { onSuccess: refetch });
+  }, [session, user, loadingSession, isHost, isParticipant, id]);
 
   // redirect the "participant" when session ends
   useEffect(() => {
@@ -97,18 +93,6 @@ function SessionPage() {
     }
   };
 
-  const handleRoomCodeSubmit = (enteredCode) => {
-    joinSessionMutation.mutate(
-      { sessionId: id, roomCode: enteredCode },
-      {
-        onSuccess: () => {
-          setShowRoomCodeModal(false);
-          refetch();
-        },
-      }
-    );
-  };
-
   return (
     <div className="h-screen bg-base-100 flex flex-col">
       <Navbar />
@@ -135,15 +119,6 @@ function SessionPage() {
                           Host: {session?.host?.name || "Loading..."} •{" "}
                           {session?.participant ? 2 : 1}/2 participants
                         </p>
-                        {isHost && session && (
-                          <div className="mt-3 inline-block">
-                            <p className="text-xs text-base-content/50 mb-1">Room Code:</p>
-                            <div className="badge badge-primary badge-lg font-mono font-bold text-lg tracking-widest">
-                              {deriveRoomCode(session._id)}
-                            </div>
-                            <p className="text-xs text-base-content/50 mt-1">Share this code with your participant</p>
-                          </div>
-                        )}
                       </div>
 
                       <div className="flex items-center gap-3">
@@ -312,17 +287,6 @@ function SessionPage() {
           </Panel>
         </PanelGroup>
       </div>
-
-      {/* Room Code Modal */}
-      {showRoomCodeModal && (
-        <div onClick={() => setShowRoomCodeModal(false)}>
-          <RoomCodeModal
-            sessionId={id}
-            onSubmit={handleRoomCodeSubmit}
-            isLoading={joinSessionMutation.isPending}
-          />
-        </div>
-      )}
     </div>
   );
 }
