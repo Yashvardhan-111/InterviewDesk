@@ -14,6 +14,7 @@ import OutputPanel from "../components/OutputPanel";
 import useStreamClient from "../hooks/useStreamClient";
 import { StreamCall, StreamVideo } from "@stream-io/video-react-sdk";
 import VideoCallUI from "../components/VideoCallUI";
+import RoomCodeModal from "../components/RoomCodeModal";
 
 function SessionPage() {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ function SessionPage() {
   const { user } = useUser();
   const [output, setOutput] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
+  const [showRoomCodeModal, setShowRoomCodeModal] = useState(false);
+  const [roomCodeError, setRoomCodeError] = useState("");
 
   const { data: sessionData, isLoading: loadingSession, refetch } = useSessionById(id);
 
@@ -46,13 +49,13 @@ function SessionPage() {
   const [selectedLanguage, setSelectedLanguage] = useState("javascript");
   const [code, setCode] = useState(problemData?.starterCode?.[selectedLanguage] || "");
 
-  // auto-join session if user is not already a participant and not the host
+  // show room code modal if user is not already a participant and not the host
   useEffect(() => {
     if (!session || !user || loadingSession) return;
     if (isHost || isParticipant) return;
 
-    joinSessionMutation.mutate(id, { onSuccess: refetch });
-  }, [session, user, loadingSession, isHost, isParticipant, id]);
+    setShowRoomCodeModal(true);
+  }, [session, user, loadingSession, isHost, isParticipant]);
 
   // redirect the "participant" when session ends
   useEffect(() => {
@@ -93,6 +96,22 @@ function SessionPage() {
     }
   };
 
+  const handleRoomCodeSubmit = (roomCode) => {
+    setRoomCodeError("");
+    joinSessionMutation.mutate(
+      { id, roomCode },
+      {
+        onSuccess: () => {
+          setShowRoomCodeModal(false);
+          refetch();
+        },
+        onError: (error) => {
+          setRoomCodeError(error.response?.data?.message || "Failed to join session");
+        },
+      }
+    );
+  };
+
   return (
     <div className="h-screen bg-base-100 flex flex-col">
       <Navbar />
@@ -122,6 +141,11 @@ function SessionPage() {
                       </div>
 
                       <div className="flex items-center gap-3">
+                        {isHost && session?.roomCode && (
+                          <div className="badge badge-primary badge-lg font-mono text-lg">
+                            Room Code: {session.roomCode}
+                          </div>
+                        )}
                         <span
                           className={`badge badge-lg ${getDifficultyBadgeClass(
                             session?.difficulty
@@ -287,6 +311,13 @@ function SessionPage() {
           </Panel>
         </PanelGroup>
       </div>
+
+      <RoomCodeModal
+        isOpen={showRoomCodeModal}
+        onClose={() => setShowRoomCodeModal(false)}
+        onSubmit={handleRoomCodeSubmit}
+        error={roomCodeError}
+      />
     </div>
   );
 }

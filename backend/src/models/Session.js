@@ -30,6 +30,10 @@ const sessionSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    roomCode: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
