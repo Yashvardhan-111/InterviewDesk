@@ -139,10 +139,15 @@ function SessionPage() {
                           {session?.participant ? 2 : 1}/2 participants
                         </p>
 
+                        
+                      </div>
+
+                      <div className="flex items-center gap-3">
                         {isHost && session?.roomCode && (
-                          <div className="mt-3 flex items-center gap-3 bg-black/70 border border-[#1b4f2a] rounded-lg p-3 text-white">
-                            <span className="text-sm text-[#95ffb2]">Room Code</span>
-                            <span className="text-2xl font-mono tracking-widest">{session.roomCode}</span>
+                          <div>
+                            <div className="badge badge-primary badge-lg font-mono text-lg">
+                              Room Code: {session.roomCode}
+                            </div>
                             <button
                               className="btn btn-sm btn-success btn-outline"
                               onClick={() => {
@@ -151,17 +156,9 @@ function SessionPage() {
                                   .catch(() => alert("Copy failed, please manually copy the code"));
                               }}
                             >
-                              Copy
+                              📋
                             </button>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="flex items-center gap-3">
-                        {isHost && session?.roomCode && (
-                          <div className="badge badge-primary badge-lg font-mono text-lg">
-                            Room Code: {session.roomCode}
-                          </div>
+                          </div>       
                         )}
                         <span
                           className={`badge badge-lg ${getDifficultyBadgeClass(
