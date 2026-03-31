@@ -144,10 +144,9 @@ function SessionPage() {
 
                       <div className="flex items-center gap-3">
                         {isHost && session?.roomCode && (
-                          <div>
-                            <div className="badge badge-primary badge-lg font-mono text-lg">
-                              Room Code: {session.roomCode}
-                            </div>
+                          <div className="badge badge-primary badge-lg font-mono text-lg truncate min-w-0">
+                            Room Code: {session.roomCode}
+
                             <button
                               className="btn btn-sm btn-success btn-outline"
                               onClick={() => {
