@@ -138,6 +138,23 @@ function SessionPage() {
                           Host: {session?.host?.name || "Loading..."} •{" "}
                           {session?.participant ? 2 : 1}/2 participants
                         </p>
+
+                        {isHost && session?.roomCode && (
+                          <div className="mt-3 flex items-center gap-3 bg-black/70 border border-[#1b4f2a] rounded-lg p-3 text-white">
+                            <span className="text-sm text-[#95ffb2]">Room Code</span>
+                            <span className="text-2xl font-mono tracking-widest">{session.roomCode}</span>
+                            <button
+                              className="btn btn-sm btn-success btn-outline"
+                              onClick={() => {
+                                navigator.clipboard
+                                  .writeText(session.roomCode)
+                                  .catch(() => alert("Copy failed, please manually copy the code"));
+                              }}
+                            >
+                              Copy
+                            </button>
+                          </div>
+                        )}
                       </div>
 
                       <div className="flex items-center gap-3">
