@@ -119,7 +119,7 @@ function SessionPage() {
       <div className="flex-1">
         <PanelGroup direction="horizontal">
           {/* LEFT PANEL - CODE EDITOR & PROBLEM DETAILS */}
-          <Panel defaultSize={60} minSize={40}>
+          <Panel defaultSize={60} minSize={45}>
             <PanelGroup direction="vertical">
               {/* PROBLEM DSC PANEL */}
               <Panel defaultSize={50} minSize={20}>
