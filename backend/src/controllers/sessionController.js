@@ -171,3 +171,43 @@ export async function endSession(req, res) {
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
+
+export async function leaveSession(req, res) {
+  try {
+    const { id } = req.params;
+    const userId = req.user._id;
+
+    const session = await Session.findById(id);
+
+    if (!session) return res.status(404).json({ message: "Session not found" });
+
+    // Host leaves the call => end session
+    if (session.host.toString() === userId.toString()) {
+      if (session.status === "completed") {
+        return res.status(400).json({ message: "Session is already completed" });
+      }
+      const call = streamClient.video.call("default", session.callId);
+      await call.delete({ hard: true });
+
+      const channel = chatClient.channel("messaging", session.callId);
+      await channel.delete();
+
+      session.status = "completed";
+      await session.save();
+
+      return res.status(200).json({ session, message: "Host left and session ended" });
+    }
+
+    // Participant leaves the call => remove participant
+    if (session.participant && session.participant.toString() === userId.toString()) {
+      session.participant = null;
+      await session.save();
+      return res.status(200).json({ session, message: "Participant left session" });
+    }
+
+    res.status(403).json({ message: "You are not a participant of this session" });
+  } catch (error) {
+    console.log("Error in leaveSession controller:", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}

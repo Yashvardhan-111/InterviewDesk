@@ -1,7 +1,8 @@
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useEndSession, useJoinSession, useSessionById } from "../hooks/useSessions";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEndSession, useJoinSession, useLeaveSession, useSessionById } from "../hooks/useSessions";
 import { PROBLEMS } from "../data/problems";
 import { executeCode } from "../lib/piston";
 import Navbar from "../components/Navbar";
@@ -27,8 +28,10 @@ function SessionPage() {
 
   const { data: sessionData, isLoading: loadingSession, refetch } = useSessionById(id);
 
+  const queryClient = useQueryClient();
   const joinSessionMutation = useJoinSession();
   const endSessionMutation = useEndSession();
+  const leaveSessionMutation = useLeaveSession();
 
   const session = sessionData?.session;
   const isHost = session?.host?.clerkId === user?.id;
@@ -89,11 +92,34 @@ function SessionPage() {
     setIsRunning(false);
   };
 
+  const invalidateSessionQueries = () => {
+    queryClient.invalidateQueries(["activeSessions"]);
+    queryClient.invalidateQueries(["session", id]);
+    queryClient.invalidateQueries(["myRecentSessions"]);
+  };
+
   const handleEndSession = () => {
     if (confirm("Are you sure you want to end this session? All participants will be notified.")) {
-      // this will navigate the HOST to dashboard
-      endSessionMutation.mutate(id, { onSuccess: () => navigate("/dashboard") });
+      endSessionMutation.mutate(id, {
+        onSuccess: () => {
+          invalidateSessionQueries();
+          navigate("/dashboard");
+        },
+      });
     }
+  };
+
+  const handleLeaveCall = () => {
+    if (isHost) {
+      return handleEndSession();
+    }
+
+    leaveSessionMutation.mutate(id, {
+      onSuccess: () => {
+        invalidateSessionQueries();
+        navigate("/dashboard");
+      },
+    });
   };
 
   const handleRoomCodeSubmit = (roomCode) => {
@@ -315,7 +341,11 @@ function SessionPage() {
                 <div className="h-full">
                   <StreamVideo client={streamClient}>
                     <StreamCall call={call}>
-                      <VideoCallUI chatClient={chatClient} channel={channel} />
+                      <VideoCallUI
+                        chatClient={chatClient}
+                        channel={channel}
+                        onLeave={handleLeaveCall}
+                      />
                     </StreamCall>
                   </StreamVideo>
                 </div>
