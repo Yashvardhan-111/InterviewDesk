@@ -7,6 +7,7 @@ import {
   getMyRecentSessions,
   getSessionById,
   joinSession,
+  leaveSession,
 } from "../controllers/sessionController.js";
 
 const router = express.Router();
