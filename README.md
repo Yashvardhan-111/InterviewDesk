@@ -1,11 +1,9 @@
-Live Link: https://interviewdesk.onrender.com
+Live Link: https://socialcode-1ryz.onrender.com
 
 
 ✨ Highlights:
-
 🧑‍💻 VSCode-Powered Code Editor
 🔐 Authentication via Clerk
-🎥 1-on-1 Video Interview Rooms
 🧭 Dashboard with Live Stats
 🔊 Mic & Camera Toggle, Screen Sharing & Recording
 💬 Real-time Chat Messaging
